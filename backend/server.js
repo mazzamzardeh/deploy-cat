@@ -1,7 +1,13 @@
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config(); // loads varibles from .env file into process.env
 
 const app = express();
+
+ // console.log(process.env.KEY); // WE GET 12345 WHEN WE RUN node server.js in the terminal 
+
 
 //* Middleware
 app.use(cors());
@@ -22,8 +28,16 @@ app.use((err, req, res, next) => {
 });
 
 
-const port = 3003;
+const port = process.env.PORT || 3003;
+
 
 app.listen(port, () => {
-  console.log(`server is listening @ ${port}`);
+  if (process.env.NODE_ENV === "development"){
+    console.log(`development: server is listining @ ${port}`);
+    
+  }else { 
+    console.log(`production: :server is listening @ ${port}`);
+    
+  }
+
 });
